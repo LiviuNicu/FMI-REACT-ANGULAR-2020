@@ -12,8 +12,12 @@ export function Home() {
   return (
     <>
       <h1>HOME</h1>
-      <button onClick={goToLogin}>Login</button>
-      <button onClick={goToRegister}>Register</button>
+      <button className="btn btn-primary" onClick={goToLogin}>
+        Login
+      </button>
+      <button className="btn btn-primary" onClick={goToRegister}>
+        Register
+      </button>
     </>
   );
 }
