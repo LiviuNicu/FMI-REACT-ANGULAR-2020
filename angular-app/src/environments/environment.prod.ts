@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  url: 'https://salty-sands-74195.herokuapp.com/',
 };
