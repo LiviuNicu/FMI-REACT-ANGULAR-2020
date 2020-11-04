@@ -29,6 +29,16 @@ export class MainService {
       );
   }
 
+  login(data: any): Observable<any> {
+    return this.http
+      .post(this.url + 'user/login', data, this.getHeaders())
+      .pipe(
+        tap((response) => {
+          localStorage.setItem('token', response.token);
+        })
+      );
+  }
+
   private handleError<T>(result?: T) {
     return (error: any): Observable<T> => {
       if (error.status == 401) {

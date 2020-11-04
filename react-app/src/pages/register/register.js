@@ -4,6 +4,7 @@ import {
   doRegister,
   reqRegisterData,
   clearRegisterData,
+  userSlice,
 } from "./../../slices/userSlice";
 import { useHistory } from "react-router-dom";
 
@@ -13,6 +14,7 @@ export function Register() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [confirm_password, setConfirmPassword] = useState();
+  const [isValid, setIsValid] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -23,7 +25,8 @@ export function Register() {
       history.push("/login");
       dispatch(clearRegisterData());
     }
-  }, [registerResponse]);
+    setIsValid(!(name && email && password && confirm_password));
+  }, [registerResponse, name, email, password, confirm_password]);
 
   const register = () => {
     const data = {
@@ -36,13 +39,19 @@ export function Register() {
     };
 
     console.log(data);
-
-    dispatch(doRegister(data));
+    if (!isValid) dispatch(doRegister(data));
   };
 
   return (
     <>
       <h1>REGISTER</h1>
+      {isValid && <div className="alert alert-danger">Formul este invalid</div>}
+
+      {isValid ? (
+        <div className="alert alert-danger">Formul este invalid</div>
+      ) : (
+        <div className="alert alert-success">Formul este valid</div>
+      )}
 
       <input
         type="text"
@@ -73,7 +82,7 @@ export function Register() {
         value={confirm_password}
       />
 
-      <button className="btn btn-success" onClick={register}>
+      <button className="btn btn-success" disabled={isValid} onClick={register}>
         Register
       </button>
     </>
