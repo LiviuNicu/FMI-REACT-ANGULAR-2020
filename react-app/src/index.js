@@ -9,7 +9,7 @@ import * as serviceWorker from "./serviceWorker";
 import { Route, Switch } from "react-router"; // react-router v4/v5
 import { ConnectedRouter } from "connected-react-router";
 import configureStore, { history } from "./configureStore";
-import { Home, Register, Login } from "./pages";
+import { Home, Register, Login, Game } from "./pages";
 
 const store = configureStore(/* provide initial state if any */);
 
@@ -25,6 +25,7 @@ ReactDOM.render(
           <Switch>
             <Route exact path="/" render={() => <Home></Home>} />
             <Route exact path="/login" render={() => <Login></Login>} />
+            <Route exact path="/game" render={() => <Game></Game>} />
             <Route
               exact
               path="/register"
