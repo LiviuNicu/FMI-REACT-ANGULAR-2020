@@ -1,0 +1,52 @@
+<ng-template
+  *ngIf="players.length < 2; then showForm; else showScore"
+></ng-template>
+
+<ng-template #showForm>
+  <div class="row">
+    <div class="col-lg-9">
+      <input
+        class="form-control"
+        [(ngModel)]="newPlayer.name"
+        placeholder="Name ..."
+        (keydown.enter)="addPlayer(newPlayer)"
+      />
+    </div>
+    <div class="col-lg-3">
+      <button
+        class="btn btn-primary"
+        [disabled]="!newPlayer.name"
+        (click)="addPlayer(newPlayer)"
+      >
+        Add Player
+      </button>
+      <button
+        class="btn"
+        [ngClass]="newPlayer.isServing ? 'btn-success' : 'btn-danger'"
+        (click)="newPlayer.isServing = !newPlayer.isServing"
+      >
+        {{ newPlayer.isServing ? "Serveste primul" : "Nu serveste primul" }}
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #showScore>
+  <div class="row">
+    <div class="col-6" *ngFor="let player of players; let i = index">
+      <app-player
+        [currentPlayer]="player"
+        [playerNumber]="i + 1"
+        [winner]="winner"
+        (scoreChanged)="updatePlayer()"
+      ></app-player>
+    </div>
+  </div>
+
+  <div class="alert alert-success" *ngIf="winner">
+    {{ winner.name }} WINS!
+
+    <button class="btn-success" (click)="newPlayers()">New Players</button>
+    <button class="btn-success" (click)="resetScore()">Reset Score</button>
+  </div>
+</ng-template>

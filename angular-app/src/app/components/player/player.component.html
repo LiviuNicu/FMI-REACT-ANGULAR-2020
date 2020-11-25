@@ -1,0 +1,13 @@
+<div (click)="addToScore()">
+  <h4 align="center">
+    Player {{ playerNumber }} <br />
+    {{ currentPlayer?.name }}
+  </h4>
+  <h1 [style.textAlign]="'center'">{{ currentPlayer?.score }}</h1>
+  <div
+    class="alert alert-success"
+    *ngIf="currentPlayer && currentPlayer.isServing"
+  >
+    Serveste
+  </div>
+</div>
