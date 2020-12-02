@@ -1,6 +1,46 @@
-<ng-template
-  *ngIf="players.length < 2; then showForm; else showScore"
-></ng-template>
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">WE HAVE AN WINNER</h4>
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="modalRef.hide()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">Do you want to save?</div>
+  <div class="modal-footer">
+    <button class="btn btn-danger" (click)="modalRef.hide()">Cancel</button>
+    <button class="btn btn-success" (click)="save()">Save</button>
+  </div>
+</ng-template>
+<div>
+  <tabset>
+    <tab heading="Game" id="tab1">
+      <ng-template
+        *ngIf="players.length < 2; then showForm; else showScore"
+      ></ng-template>
+    </tab>
+    <tab heading="History">
+      <table class="table">
+        <tr>
+          <td>Added by</td>
+          <td>Player 1</td>
+          <td>Player 2</td>
+        </tr>
+        <tr *ngFor="let game of games">
+          <td>{{ game.addedBy.name }}</td>
+          <td *ngFor="let player of game.players">
+            {{ player.name }} {{ player.score }}
+            <b *ngIf="player.score === 21 || player.winner">WINNER</b>
+          </td>
+        </tr>
+      </table>
+    </tab>
+  </tabset>
+</div>
 
 <ng-template #showForm>
   <div class="row">

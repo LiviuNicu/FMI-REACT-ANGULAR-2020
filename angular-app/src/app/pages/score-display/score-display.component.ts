@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import {
+  BsModalRef,
+  BsModalService,
+  ModalDirective,
+} from 'ngx-bootstrap/modal';
 import { take } from 'rxjs/operators';
 import { Player } from 'src/app/interfaces/player';
 import { MainService } from 'src/app/services/main.service';
@@ -10,8 +15,11 @@ import { MainService } from 'src/app/services/main.service';
 })
 export class ScoreDisplayComponent implements OnInit {
   public players: Player[] = [];
+  public games: any = [];
   private playerSubscription;
   public winner: any;
+  modalRef: BsModalRef;
+  @ViewChild('template', { static: false }) templateInTs;
 
   public newPlayer: Player = {
     _id: '',
@@ -21,7 +29,10 @@ export class ScoreDisplayComponent implements OnInit {
     winner: false,
   };
 
-  constructor(private mainService: MainService) {}
+  constructor(
+    private mainService: MainService,
+    private modalService: BsModalService
+  ) {}
 
   ngOnInit(): void {
     this.playerSubscription = this.mainService.playerAsObservable.subscribe(
@@ -29,6 +40,16 @@ export class ScoreDisplayComponent implements OnInit {
         this.players = players;
       }
     );
+    this.getHistory();
+  }
+
+  openModal() {
+    this.modalRef = this.modalService.show(this.templateInTs);
+  }
+  getHistory() {
+    this.mainService.getHistory().subscribe((response) => {
+      this.games = response;
+    });
   }
 
   addPlayer(player: Player) {
@@ -51,6 +72,15 @@ export class ScoreDisplayComponent implements OnInit {
 
   verifyWinner() {
     this.winner = this.players.find((item) => item.score === 21);
+    if (this.winner && this.winner.name) {
+      this.openModal();
+    }
+  }
+  save() {
+    this.mainService.saveScore(this.players).subscribe((response) => {
+      this.modalRef.hide();
+      this.getHistory();
+    });
   }
 
   updatePlayer() {

@@ -10,6 +10,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ScoreDisplayComponent } from './pages/score-display/score-display.component';
 import { PlayerComponent } from './components/player/player.component';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { PlayerComponent } from './components/player/player.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    TabsModule.forRoot(),
+    ModalModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

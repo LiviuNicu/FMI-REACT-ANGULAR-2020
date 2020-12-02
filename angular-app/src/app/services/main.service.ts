@@ -33,6 +33,34 @@ export class MainService {
     };
   }
 
+  getPrivateHeaders() {
+    return {
+      headers: new HttpHeaders({
+        'content-type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+      withCredentials: false,
+    };
+  }
+
+  getHistory(): Observable<any> {
+    return this.http
+      .get(this.url + 'game/getHistory', this.getPrivateHeaders())
+      .pipe(
+        tap((response) => console.log(response)),
+        catchError(this.handleError('getHistory'))
+      );
+  }
+
+  saveScore(players: Player[]): Observable<any> {
+    return this.http
+      .post(this.url + 'game/add', players, this.getPrivateHeaders())
+      .pipe(
+        tap((response) => console.log(response)),
+        catchError(this.handleError('saveScore'))
+      );
+  }
+
   register(data: any): Observable<any> {
     return this.http
       .post(this.url + 'user/register', data, this.getHeaders())
