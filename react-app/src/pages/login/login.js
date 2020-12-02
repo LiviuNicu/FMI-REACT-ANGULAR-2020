@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { doLogin, reqLoginError, reqLoggedIn } from "./../../slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 export function Login() {
   const [email, setEmail] = useState();
@@ -10,6 +11,7 @@ export function Login() {
   const dispatch = useDispatch();
   const serverErrorSelector = useSelector(reqLoginError);
   const serverIsLoggedIn = useSelector(reqLoggedIn);
+  let history = useHistory();
 
   const login = () => {
     const data = {
@@ -25,6 +27,7 @@ export function Login() {
 
     if (serverIsLoggedIn) {
       console.log("Redirect ...");
+      history.push("/game");
     }
   }, [email, password, serverErrorSelector, serverIsLoggedIn]);
 
