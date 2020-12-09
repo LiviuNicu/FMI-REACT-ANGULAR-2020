@@ -1,0 +1,20 @@
+{{ today | date: "short" }}
+<div class="form-group">
+  <label>Search</label>
+  <input
+    class="form-control"
+    [(ngModel)]="name"
+    (ngModelChange)="onFieldChanged()"
+  />
+</div>
+<button class="btn btn-success" (click)="isServingState = !isServingState">
+  Toggle isServing
+</button>
+<table class="table">
+  <tr>
+    <th>Name</th>
+  </tr>
+  <tr *ngFor="let player of players | isServingFilter: isServingState">
+    <td>{{ player.name | uppercase }}</td>
+  </tr>
+</table>

@@ -6,6 +6,7 @@ export const gameSlice = createSlice({
   initialState: {
     players: [],
     games: [],
+    serverPlayers: [],
   },
   reducers: {
     addPlayer: (state, action) => {
@@ -17,15 +18,34 @@ export const gameSlice = createSlice({
     setGames: (state, action) => {
       state.games = action.payload.data;
     },
+    setPlayers: (state, action) => {
+      state.serverPlayers = action.payload.data;
+    },
   },
 });
 
 //actions
-export const { addPlayer, updatePlayers, setGames } = gameSlice.actions;
+export const {
+  addPlayer,
+  updatePlayers,
+  setGames,
+  setPlayers,
+} = gameSlice.actions;
 
 //slector
 export const players = (state) => state.game.players;
 export const games = (state) => state.game.games;
+export const serverPlayers = (state) => state.game.serverPlayers;
+
+export const doSearch = (data) => async (dispatch) => {
+  try {
+    // {name: ''} daca nu e nimic in name returnez toti playerii
+    const response = await privateApi.post("game/players/search", data);
+    if (response.status === 200) {
+      dispatch(setPlayers(response));
+    }
+  } catch (e) {}
+};
 
 export const doGetHistory = () => async (dispatch) => {
   try {

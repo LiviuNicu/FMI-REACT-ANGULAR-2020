@@ -12,6 +12,8 @@ import { ScoreDisplayComponent } from './pages/score-display/score-display.compo
 import { PlayerComponent } from './components/player/player.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { SearchComponent } from './components/search/search/search.component';
+import { IsServingFilterPipe } from './pipes/is-serving-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     RegisterComponent,
     ScoreDisplayComponent,
     PlayerComponent,
+    SearchComponent,
+    IsServingFilterPipe,
   ],
   imports: [
     BrowserModule,

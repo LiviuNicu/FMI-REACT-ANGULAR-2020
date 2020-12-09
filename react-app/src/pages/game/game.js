@@ -6,6 +6,8 @@ import {
   games,
   doGetHistory,
   doSaveScore,
+  doSearch,
+  serverPlayers,
 } from "./../../slices/gameSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { Player } from "./../../pages";
@@ -16,16 +18,29 @@ import Button from "react-bootstrap/Button";
 
 export function Game() {
   const [name, setName] = useState("");
+  const [search, setSearch] = useState("");
   const [show, setShow] = useState(false);
   const [winner, setWinner] = useState(false);
   const dispatch = useDispatch();
   const allPlayers = useSelector(players);
   const allGames = useSelector(games);
+  const sPlayers = useSelector(serverPlayers);
+
   useEffect(() => {
     if (!allGames.length) {
       dispatch(doGetHistory());
     }
-  }, [allGames]);
+    if (!sPlayers.length) {
+      dispatch(doSearch({ name: "" }));
+    }
+  }, [allGames, sPlayers]);
+
+  const searchChange = (event) => {
+    const value = event.target.value;
+    setSearch(value);
+    dispatch(doSearch({ name: value }));
+  };
+
   const handleClose = () => {
     setShow(false);
   };
@@ -173,6 +188,29 @@ export function Game() {
                     </tr>
                   );
                 })}
+            </table>
+          </Tab>
+          <Tab eventKey="players" title="Player search">
+            <div className="form-group">
+              <label>Search</label>
+              <input
+                className="form-control"
+                placeholder="Search..."
+                value={search}
+                onChange={searchChange}
+              />
+            </div>
+            <table className="table">
+              <tr>
+                <th>Name</th>
+              </tr>
+              {sPlayers.map((player) => {
+                return (
+                  <tr>
+                    <td>{player.name}</td>
+                  </tr>
+                );
+              })}
             </table>
           </Tab>
         </Tabs>

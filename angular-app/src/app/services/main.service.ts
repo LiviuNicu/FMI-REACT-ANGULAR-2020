@@ -79,6 +79,13 @@ export class MainService {
         })
       );
   }
+  search(data: any): Observable<any> {
+    return this.http.post(
+      this.url + 'game/players/search',
+      data,
+      this.getPrivateHeaders()
+    );
+  }
 
   private handleError<T>(result?: T) {
     return (error: any): Observable<T> => {
