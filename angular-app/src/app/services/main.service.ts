@@ -70,6 +70,15 @@ export class MainService {
       );
   }
 
+  registerDemoAPI(data: any): Observable<any> {
+    return this.http
+      .post('http://localhost:3000/users/register', data, this.getHeaders())
+      .pipe(
+        tap((response) => console.log(response)),
+        catchError(this.handleError('registerDemoAPI'))
+      );
+  }
+
   login(data: any): Observable<any> {
     return this.http
       .post(this.url + 'user/login', data, this.getHeaders())

@@ -14,6 +14,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { SearchComponent } from './components/search/search/search.component';
 import { IsServingFilterPipe } from './pipes/is-serving-filter.pipe';
+import { RegisterDemoComponent } from './pages/register-demo/register-demo.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { IsServingFilterPipe } from './pipes/is-serving-filter.pipe';
     PlayerComponent,
     SearchComponent,
     IsServingFilterPipe,
+    RegisterDemoComponent,
   ],
   imports: [
     BrowserModule,
